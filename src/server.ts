@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import { exists } from 'fs';
 
 (async () => {
 
@@ -30,7 +31,17 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   //! END @TODO1
-  
+  app.get ("/filteredimage", async (req, res) => {
+    const url = req.query.image_url
+    // Validate url exists
+    if (typeof url !== 'undefined'){
+      const image_path = await filterImageFromURL(url)
+      res.sendFile(image_path, deleteLocalFiles([image_path]))
+    } else {
+      res.send("Test Works but no url")
+    }
+  })
+
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async ( req, res ) => {
