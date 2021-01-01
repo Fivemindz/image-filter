@@ -36,7 +36,9 @@ import { exists } from 'fs';
     // Validate url exists
     if (typeof url !== 'undefined'){
       const image_path = await filterImageFromURL(url)
-      res.sendFile(image_path, deleteLocalFiles([image_path]))
+      res.sendFile(image_path, {}, (err) => {
+        deleteLocalFiles([image_path])
+      })
     } else {
       res.send("Test Works but no url")
     }
