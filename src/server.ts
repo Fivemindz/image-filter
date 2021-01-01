@@ -14,11 +14,11 @@ import { exists } from 'fs';
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
 
-  app.get ("/filteredimage", async (req, res) => {
-    const url = req.query.image_url
+  app.get ("/filteredimage", async (req:express.Request, res:express.Response) => {
+    const url:string = req.query.image_url
     // Validate url exists
     if (typeof url !== 'undefined'){
-      const image_path = await filterImageFromURL(url)
+      const image_path:string = await filterImageFromURL(url)
       res.sendFile(image_path, {}, (err) => {
         deleteLocalFiles([image_path])
       })
@@ -29,7 +29,7 @@ import { exists } from 'fs';
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async (req:express.Request, res:express.Response) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
   
