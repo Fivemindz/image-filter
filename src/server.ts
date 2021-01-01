@@ -23,7 +23,7 @@ import { exists } from 'fs';
         deleteLocalFiles([image_path])
       })
     } else {
-      res.send("Test Works but no url")
+      res.status(422).send("Unable to Process request, no url found.")
     }
   })
 
